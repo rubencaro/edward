@@ -1,1 +1,1 @@
-module github.com/rubencaro/farfetcher
+module github.com/rubencaro/edward

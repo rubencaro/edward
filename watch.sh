@@ -1,0 +1,3 @@
+#!/bin/bash
+
+./rerun.sh -c go test -v ./...
