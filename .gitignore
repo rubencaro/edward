@@ -1,1 +1,6 @@
+# don't save edward's artifacts
 edward.toml
+edward
+
+# editor's crap
+.vscode
