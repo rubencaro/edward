@@ -3,6 +3,7 @@ package cnf
 import (
 	"io"
 	"io/ioutil"
+	"net/http"
 	"os"
 	"strings"
 
@@ -84,7 +85,12 @@ func readTOML(path string) (*Config, error) {
 }
 
 func applyDefaults(c *Config) *Config {
+	// default client, exposed just to make it testable
+	if c.HTTPClient == nil {
+		c.HTTPClient = http.DefaultClient
+	}
 	return &Config{
-		ImgURL: c.ImgURL, // this goes as is, no default
+		ImgURL:     c.ImgURL, // this goes as is, no default
+		HTTPClient: c.HTTPClient,
 	}
 }

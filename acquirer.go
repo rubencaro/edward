@@ -27,7 +27,7 @@ func (DefaultAcquirer) acquire(c *cnf.Config) ([]byte, error) {
 	// req.SetBasicAuth(c.Login, c.Password)
 
 	var resp *http.Response
-	if resp, err = http.DefaultClient.Do(req); err != nil {
+	if resp, err = c.HTTPClient.Do(req); err != nil {
 		return nil, err
 	}
 
