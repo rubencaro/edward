@@ -16,25 +16,11 @@ func TestAverageHash(t *testing.T) {
 	img, err := png.Decode(imgfile)
 	tst.Ok(t, err)
 
-	type args struct {
-		img image.Image
-	}
-	tests := []struct {
-		name string
-		args args
-		want uint64
-	}{
-		{"gopher image", args{img}, 9331034559709847552},
-	}
-	for _, tt := range tests {
-		t.Run(tt.name, func(t *testing.T) {
-			got := AverageHash(tt.args.img)
-			tst.Eq(t, tt.want, got)
-		})
-	}
+	got := AverageHash(img)
+	tst.Eq(t, uint64(9331034559709847552), got)
 }
 
-func Test_mean(t *testing.T) {
+func TestMean(t *testing.T) {
 	imgfile, err := os.Open("assets/gopher.png")
 	defer imgfile.Close()
 	tst.Ok(t, err)
