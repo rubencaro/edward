@@ -9,6 +9,8 @@ verbose='false'
 ignore_until=$(date +%s.%N)
 excludes='\.git|\.coverage|\.cache|tmp|env'
 cmd=""
+yellow=$(tput setaf 11)
+reset=$(tput sgr0)
 
 function usage {
     echo "Rerun a given command every time filesystem changes are detected."
@@ -54,8 +56,9 @@ function maybe_echo {
 
 function execute {
     [ $clear = "true" ] && clear
-    maybe_echo "Excludes: $excludes"
-    maybe_echo "Running: $cmd"
+    maybe_echo "At: $yellow$(date)$reset"
+    maybe_echo "Excludes: $yellow$excludes$reset"
+    maybe_echo "Running: $yellow$cmd$reset"
     (sleep $ignore_secs && $cmd) &
 }
 
