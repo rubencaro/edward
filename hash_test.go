@@ -47,3 +47,14 @@ func TestMean(t *testing.T) {
 		})
 	}
 }
+
+func TestDistance(t *testing.T) {
+	a := uint64(9331034559709847552)
+	b := uint64(9331034559709847552)
+	d := Distance(a, b)
+	tst.Eq(t, uint64(0), d)
+
+	c := uint64(9331034559709848552)
+	e := Distance(a, c)
+	tst.Eq(t, uint64(6), e)
+}
