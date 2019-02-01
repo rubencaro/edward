@@ -11,4 +11,7 @@ type Config struct {
 
 	// HTTPClient is the http.Client that will be used to make requests
 	HTTPClient *http.Client
+
+	// Threshold is the limit to the detection of movement (Hamming distance between two image Average hashes, actually)
+	Threshold uint64
 }
