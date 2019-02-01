@@ -21,7 +21,7 @@ func TestAcquiresOK(t *testing.T) {
 	c.ImgURL = server.URL + "/some/path"
 
 	acq := &DefaultAcquirer{}
-	body, err := acq.acquire(c)
+	body, err := acq.Acquire(c)
 
 	tst.Ok(t, err)
 	tst.Eq(t, []byte(`OK`), body)
@@ -39,7 +39,7 @@ func TestAcquiresNotOK(t *testing.T) {
 	c.ImgURL = server.URL + "/some/path"
 
 	acq := &DefaultAcquirer{}
-	_, err := acq.acquire(c)
+	_, err := acq.Acquire(c)
 
 	tst.Assert(t, err != nil, "There should be an error")
 }

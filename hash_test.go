@@ -17,7 +17,7 @@ func TestAverageHash(t *testing.T) {
 	tst.Ok(t, err)
 
 	got := AverageHash(img)
-	tst.Eq(t, uint64(9331034559709847552), got)
+	tst.Eq(t, uint64(0x817e7e7e7e666000), got)
 }
 
 func TestMean(t *testing.T) {
@@ -37,7 +37,7 @@ func TestMean(t *testing.T) {
 		args args
 		want uint32
 	}{
-		{"gopher image", args{img}, 9872},
+		{"gopher image", args{img}, 0x2590},
 		{"0x0 image", args{emptyimg}, 0},
 	}
 	for _, tt := range tests {
