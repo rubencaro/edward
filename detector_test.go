@@ -1,8 +1,6 @@
 package main
 
 import (
-	"image/png"
-	"os"
 	"testing"
 
 	"github.com/rubencaro/edward/lib/cnf"
@@ -10,21 +8,35 @@ import (
 	"github.com/rubencaro/edward/lib/tst"
 )
 
-func TestShouldFire(t *testing.T) {
+func TestCycleAndDetect(t *testing.T) {
 	// two images with distance 3
-	hash1 := getHashForFile(t, "assets/gopher.png")
-	hash2 := getHashForFile(t, "assets/gopher_moved.png")
-
-	// see if threshold is honored
-	tst.Assert(t, true == ShouldFire(hash1, hash2, &cnf.Config{Threshold: 3}), "It should fire for this distance/threshold")
-	tst.Assert(t, false == ShouldFire(hash1, hash2, &cnf.Config{Threshold: 2}), "It shouldn't fire for this distance/threshold")
-}
-
-func getHashForFile(t *testing.T, path string) uint64 {
-	imgfile, err := os.Open(path)
-	defer imgfile.Close()
+	a1, err := NewFixedAcquirer("assets/gopher.png")
 	tst.Ok(t, err)
-	img, err := png.Decode(imgfile)
+	a2, err := NewFixedAcquirer("assets/gopher_moved.png")
 	tst.Ok(t, err)
-	return AverageHash(img)
+
+	// config with Threshold = 3
+	c := &cnf.Config{Threshold: 3}
+
+	// Run cycle for the first time, so previous hash is 0
+	// This returns the hash for the last image, and a boolean indicating if there was any movement
+	hash1, anyMovement := CycleAndDetect(uint64(0), a1, c)
+	tst.Eq(t, false, anyMovement)
+
+	// Try again with the same image, no movement should be detected
+	hash2, anyMovement := CycleAndDetect(hash1, a1, c)
+	tst.Eq(t, false, anyMovement)
+
+	// Now try with a different image, (distance 3, Threshold 3) movement should be detected
+	hash3, anyMovement := CycleAndDetect(hash2, a2, c)
+	tst.Eq(t, true, anyMovement)
+
+	// Try again with the same image, no movement should be detected
+	_, anyMovement = CycleAndDetect(hash3, a2, c)
+	tst.Eq(t, false, anyMovement)
+
+	// Try again with the same image, lower Threshold, movement should be detected
+	c.Threshold = uint64(1)
+	_, anyMovement = CycleAndDetect(hash3, a2, c)
+	tst.Eq(t, true, anyMovement)
 }
