@@ -14,4 +14,14 @@ type Config struct {
 
 	// Threshold is the limit to the detection of movement (Hamming distance between two image Average hashes, actually)
 	Threshold uint64
+
+	// From is the email address that will be used as 'From' header when sending emails,
+	// and also as the 'User' for authenticating the SMTP session.
+	From string
+
+	// Pass is the password for the SMTP session
+	Pass string
+
+	// To is the email address that will be used as 'To' header when sending emails
+	To string
 }
