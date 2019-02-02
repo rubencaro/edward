@@ -3,6 +3,7 @@ package main
 import (
 	"image"
 	"image/png"
+	"io/ioutil"
 	"os"
 	"testing"
 
@@ -13,10 +14,10 @@ func TestAverageHash(t *testing.T) {
 	imgfile, err := os.Open("assets/gopher.png")
 	defer imgfile.Close()
 	tst.Ok(t, err)
-	img, err := png.Decode(imgfile)
+	data, err := ioutil.ReadAll(imgfile)
 	tst.Ok(t, err)
-
-	got := AverageHash(img)
+	got, err := AverageHash(data)
+	tst.Ok(t, err)
 	tst.Eq(t, uint64(0x817e7e7e7e666000), got)
 }
 

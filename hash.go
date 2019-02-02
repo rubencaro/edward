@@ -4,6 +4,7 @@ package main
 // which was taken from github.com/jteeuwen/imghash
 
 import (
+	"bytes"
 	"image"
 
 	"github.com/disintegration/imaging"
@@ -11,11 +12,16 @@ import (
 
 // AverageHash calculates the average hash of an image. First the image is resized to 8x8.
 // Then it is converted to grayscale. Lastly the average hash is computed.
-func AverageHash(img image.Image) uint64 {
+func AverageHash(data []byte) (uint64, error) {
+	buff := bytes.NewBuffer(data)
+	img, _, err := image.Decode(buff)
+	if err != nil {
+		return 0, err
+	}
 	img = imaging.Resize(img, 8, 8, imaging.Box)
 	img = imaging.Grayscale(img)
 	mean := mean(img)
-	return calcAvgHash(img, mean)
+	return calcAvgHash(img, mean), nil
 }
 
 // mean computes the mean of all pixels.

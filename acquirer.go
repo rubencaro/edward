@@ -11,6 +11,7 @@ import (
 
 // Acquirer is the interface for the one responsible of acquiring the image
 type Acquirer interface {
+	// Acquire returns the image's bytes, depending on the actual implementation
 	Acquire(*cnf.Config) ([]byte, error)
 }
 
