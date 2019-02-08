@@ -31,6 +31,7 @@ func SendAlertEmail(c *cnf.Config, img []byte, d DialerSender) error {
 // DialerSender is the interface for the email senders
 type DialerSender interface {
 	// DialAndSend auths with the SMTP server and sends the email
+	// Mimics gomail.Dialer's DialAndSend method
 	DialAndSend(m ...*gomail.Message) error
 }
 
