@@ -24,7 +24,6 @@ func SendAlertEmail(c *cnf.Config, img []byte, d DialerSender) error {
 		d = newDefaultDialerSender("smtp.gmail.com", 587, c.From, c.Pass)
 	}
 
-	// Send the email to Bob, Cora and Dan.
 	return d.DialAndSend(m)
 }
 

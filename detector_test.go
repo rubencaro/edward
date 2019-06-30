@@ -4,7 +4,6 @@ import (
 	"testing"
 
 	"github.com/rubencaro/edward/lib/cnf"
-
 	"github.com/rubencaro/edward/lib/tst"
 )
 
